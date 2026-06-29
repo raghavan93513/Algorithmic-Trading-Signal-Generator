@@ -1,0 +1,24 @@
+command:
+  - "streamlit"
+  - "run"
+  - "app.py"
+
+env:
+  - name: STREAMLIT_SERVER_ENABLE_CORS
+    value: "false"
+  - name: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
+    value: "false"
+  - name: MODEL_SERVING_ENDPOINT
+    value: "raghavan-trading-signal-predictor"
+  - name: SQL_WAREHOUSE_HTTP_PATH
+    value: "/sql/1.0/warehouses/9389bc56de2ec151"
+  - name: VS_ENDPOINT
+    value: "raghavan-trading-signals-vs"
+  - name: VS_INDEX_NAME
+    value: "raghavan_trading_signals.gold.regime_vector_index"
+  - name: CATALOG
+    value: "raghavan_trading_signals"
+  - name: LAKEBASE_HOST
+    value: "ep-red-frog-d128t6zg.database.us-west-2.cloud.databricks.com"
+  - name: LAKEBASE_ENDPOINT
+    valueFrom: "lakebase"

@@ -1,0 +1,711 @@
+{
+  "datasets": [
+    {
+      "name": "1314276c",
+      "displayName": "market_today",
+      "queryLines": [
+        "SELECT * FROM raghavan_trading_signals.gold.v_daily_signals"
+      ]
+    },
+    {
+      "name": "50968d97",
+      "displayName": "regimes",
+      "queryLines": [
+        "SELECT * FROM raghavan_trading_signals.gold.weekly_market_regimes ORDER BY week_start"
+      ]
+    },
+    {
+      "name": "fb7b69cc",
+      "displayName": "kpis",
+      "queryLines": [
+        "SELECT\n",
+        "  COUNT(DISTINCT symbol)                                              AS stocks_tracked,\n",
+        "  COUNT(DISTINCT CASE WHEN rsi_zone    = 'Oversold'       THEN symbol END) AS oversold,\n",
+        "  COUNT(DISTINCT CASE WHEN rsi_zone    = 'Overbought'     THEN symbol END) AS overbought,\n",
+        "  COUNT(DISTINCT CASE WHEN volume_flag = 'Unusual Volume' THEN symbol END) AS unusual_volume\n",
+        "FROM raghavan_trading_signals.gold.v_daily_signals;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "32e76f21",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "counter-title",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fb7b69cc",
+                  "fields": [
+                    {
+                      "name": "sum(stocks_tracked)",
+                      "expression": "SUM(`stocks_tracked`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Stocks Tracked"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(stocks_tracked)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "oversold-rsi-30",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fb7b69cc",
+                  "fields": [
+                    {
+                      "name": "sum(oversold)",
+                      "expression": "SUM(`oversold`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Oversold (RSI < 30)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(oversold)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "overbought-rsi-70",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fb7b69cc",
+                  "fields": [
+                    {
+                      "name": "sum(overbought)",
+                      "expression": "SUM(`overbought`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Overbought (RSI > 70)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(overbought)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "unusual-volume",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "fb7b69cc",
+                  "fields": [
+                    {
+                      "name": "sum(unusual_volume)",
+                      "expression": "SUM(`unusual_volume`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Unusual Volume"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(unusual_volume)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 10,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "53113ee3",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1314276c",
+                  "fields": [
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "rsi_zone",
+                      "expression": "`rsi_zone`"
+                    },
+                    {
+                      "name": "volume_flag",
+                      "expression": "`volume_flag`"
+                    },
+                    {
+                      "name": "close_price",
+                      "expression": "`close_price`"
+                    },
+                    {
+                      "name": "rsi_14",
+                      "expression": "`rsi_14`"
+                    },
+                    {
+                      "name": "macd_histogram",
+                      "expression": "`macd_histogram`"
+                    },
+                    {
+                      "name": "bb_position",
+                      "expression": "`bb_position`"
+                    },
+                    {
+                      "name": "bollinger_zone",
+                      "expression": "`bollinger_zone`"
+                    },
+                    {
+                      "name": "volatility_20d",
+                      "expression": "`volatility_20d`"
+                    },
+                    {
+                      "name": "volume_ratio",
+                      "expression": "`volume_ratio`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "symbol"
+                  },
+                  {
+                    "fieldName": "rsi_zone",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Oversold"
+                            },
+                            "operator": "contains"
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 3
+                          }
+                        },
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Overbought"
+                            },
+                            "operator": "contains"
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 4
+                          }
+                        },
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Neutral"
+                            },
+                            "operator": "contains"
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 9
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "fieldName": "volume_flag",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Unusual Volume"
+                            },
+                            "operator": "contains"
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 2
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "fieldName": "close_price"
+                  },
+                  {
+                    "fieldName": "rsi_14"
+                  },
+                  {
+                    "fieldName": "macd_histogram"
+                  },
+                  {
+                    "fieldName": "bb_position"
+                  },
+                  {
+                    "fieldName": "bollinger_zone"
+                  },
+                  {
+                    "fieldName": "volatility_20d"
+                  },
+                  {
+                    "fieldName": "volume_ratio"
+                  }
+                ],
+                "rowOrder": [
+                  {
+                    "by": "column-reversed",
+                    "field": {
+                      "index": 9
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "905c27b3",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1314276c",
+                  "fields": [
+                    {
+                      "name": "rsi_zone",
+                      "expression": "`rsi_zone`"
+                    },
+                    {
+                      "name": "count(symbol)",
+                      "expression": "COUNT(`symbol`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "RSI Zone Breakdown"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "rsi_zone",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "Oversold",
+                        "Neutral",
+                        "Overbought"
+                      ]
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "count(symbol)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "6f5c9580",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1314276c",
+                  "fields": [
+                    {
+                      "name": "rsi_zone",
+                      "expression": "`rsi_zone`"
+                    },
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "rsi_14",
+                      "expression": "`rsi_14`"
+                    },
+                    {
+                      "name": "volume_ratio",
+                      "expression": "`volume_ratio`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "RSI vs Volume Map"
+              },
+              "annotations": [
+                {
+                  "type": "vertical-line",
+                  "encodings": {
+                    "type": "constant",
+                    "x": {
+                      "dataType": "DOUBLE",
+                      "dataValue": "30"
+                    },
+                    "label": {
+                      "value": "RSI 30"
+                    }
+                  }
+                },
+                {
+                  "type": "vertical-line",
+                  "encodings": {
+                    "type": "constant",
+                    "x": {
+                      "dataType": "DOUBLE",
+                      "dataValue": "70"
+                    },
+                    "label": {
+                      "value": "RSI 70"
+                    }
+                  }
+                }
+              ],
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "rsi_14",
+                  "axis": {
+                    "title": "RSI (14)"
+                  },
+                  "displayName": "RSI (14)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "volume_ratio",
+                  "axis": {
+                    "title": "Volume Ratio"
+                  },
+                  "displayName": "Volume Ratio",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "rsi_zone",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "extra": [
+                  {
+                    "fieldName": "symbol"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 3,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "393233cb",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "50968d97",
+                  "fields": [
+                    {
+                      "name": "week_start",
+                      "expression": "`week_start`"
+                    },
+                    {
+                      "name": "weekly_vix",
+                      "expression": "`weekly_vix`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Market Regime: VIX Trend"
+              },
+              "annotations": [
+                {
+                  "type": "horizontal-line",
+                  "encodings": {
+                    "type": "constant",
+                    "y": {
+                      "dataType": "DOUBLE",
+                      "dataValue": "20"
+                    },
+                    "label": {
+                      "value": "Elevated"
+                    }
+                  }
+                },
+                {
+                  "type": "horizontal-line",
+                  "encodings": {
+                    "type": "constant",
+                    "y": {
+                      "dataType": "DOUBLE",
+                      "dataValue": "30"
+                    },
+                    "label": {
+                      "value": "High Fear"
+                    }
+                  }
+                }
+              ],
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "week_start",
+                  "axis": {
+                    "title": "Week"
+                  },
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "weekly_vix",
+                  "axis": {
+                    "title": "VIX"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 3,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "8ae2dba5",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"font-size: 24px;\">**Technical indicator monitor across 50  S&P-500 stocks**</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "stock",
+            "queries": [
+              {
+                "name": "dashboards/01f172ded60816f0a421ccdea49a7184/datasets/01f172dedcbc11a4931fb22f480864e1_symbol",
+                "query": {
+                  "datasetName": "1314276c",
+                  "fields": [
+                    {
+                      "name": "symbol",
+                      "expression": "`symbol`"
+                    },
+                    {
+                      "name": "symbol_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Stock"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "symbol",
+                    "queryName": "dashboards/01f172ded60816f0a421ccdea49a7184/datasets/01f172dedcbc11a4931fb22f480864e1_symbol"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 4,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
